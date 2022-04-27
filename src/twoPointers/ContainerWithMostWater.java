@@ -31,7 +31,14 @@ package twoPointers;
  *
  */
 public class ContainerWithMostWater {
-    //time: O(N) space: O(1)
+    /**
+     * idea: two pointer, i,j at the two ends of array
+     * maintain a max area
+     * if height[i] > height[j], move j
+     * else move i
+     *
+     * ime: O(N) space: O(1)
+     */
     public int maxArea(int[] height) {
         int max = 0;
         for(int i = 0, j = height.length - 1; i < j; ){

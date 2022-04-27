@@ -90,7 +90,7 @@ public class LFUCache {
             newList.add(node);
         }
     }
-    //after we do get() or put() if key is alreayd exited, we alwasy do update
+    //after we do get() or put() if key is already existed, we always do update
     private void update(Node node) {
         LRUList list = frequencyMap.get(node.frequency);
         list.remove(node);

@@ -1,9 +1,6 @@
 package bfs;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Given a url startUrl and an interface HtmlParser, implement a web crawler to crawl all links that are under the same hostname as startUrl.
@@ -57,50 +54,50 @@ import java.util.Set;
  }
 
 public class WebCrawler {
-    public List<String> crawl(String startUrl, HtmlParser htmlParser) {
-        Set<String> set = new HashSet<>();
-        String hostname = startUrl.split("/")[2];
-
-        set.add(startUrl);
-
-        dfs(startUrl, hostname, set, htmlParser);
-
-        return new ArrayList<String>(set);
-    }
-
-    private void dfs(String currentUrl, String hostname, Set<String> visited, HtmlParser hp) {
-        for (String url : hp.getUrls(currentUrl)) {
-            if (url.contains(hostname) && !visited.contains(url)) {
-                visited.add(url);
-                dfs(url, hostname, visited, hp);
-            }
-        }
-
-    }
+//    public List<String> crawl(String startUrl, HtmlParser htmlParser) {
+//        Set<String> set = new HashSet<>();
+//        String hostname = startUrl.split("/")[2];
+//
+//        set.add(startUrl);
+//
+//        dfs(startUrl, hostname, set, htmlParser);
+//
+//        return new ArrayList<String>(set);
+//    }
+//
+//    private void dfs(String currentUrl, String hostname, Set<String> visited, HtmlParser hp) {
+//        for (String url : hp.getUrls(currentUrl)) {
+//            if (url.contains(hostname) && !visited.contains(url)) {
+//                visited.add(url);
+//                dfs(url, hostname, visited, hp);
+//            }
+//        }
+//
+//    }
     //BFS
-//     public List<String> crawl(String startUrl, HtmlParser htmlParser) {
-//         Set<String> set = new HashSet<>();
-//         Queue<String> queue = new LinkedList<>();
-//         String hostname = getHostname(startUrl);
+     public List<String> crawl(String startUrl, HtmlParser htmlParser) {
+         Set<String> set = new HashSet<>();
+         Queue<String> queue = new LinkedList<>();
+         String hostname = getHostname(startUrl);
 
-//         queue.offer(startUrl);
-//         set.add(startUrl);
+         queue.offer(startUrl);
+         set.add(startUrl);
 
-//         while (!queue.isEmpty()) {
-//             String currentUrl = queue.poll();
-//             for (String url : htmlParser.getUrls(currentUrl)) {
-//                 if (url.contains(hostname) && !set.contains(url)) {
-//                     queue.offer(url);
-//                     set.add(url);
-//                 }
-//             }
-//         }
+         while (!queue.isEmpty()) {
+             String currentUrl = queue.poll();
+             for (String url : htmlParser.getUrls(currentUrl)) {
+                 if (url.contains(hostname) && !set.contains(url)) {
+                     queue.offer(url);
+                     set.add(url);
+                 }
+             }
+         }
 
-//         return new ArrayList<String>(set);
-//     }
+         return new ArrayList<String>(set);
+     }
 
-//     private String getHostname(String Url) {
-//         String[] ss = Url.split("/");
-//         return ss[2];
-//     }
+     private String getHostname(String Url) {
+         String[] ss = Url.split("/");
+         return ss[2];
+     }
 }

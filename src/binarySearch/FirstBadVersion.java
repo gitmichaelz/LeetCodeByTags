@@ -29,15 +29,15 @@ class VersionControl {
 public class FirstBadVersion extends VersionControl {
     //二分，找下界
     public int firstBadVersion(int n){
-        int lo = 1, hi = n;
-        while(lo < hi){
-            int mid = lo + (hi - lo)/2;
-            if(isBadVersion(mid)){
-                hi = mid;
+        int left = 1, right = n;
+        while (left < right) {//right points to the first possible bad version, left < right, no "=", since if (left == right) and right = mid => endless loop
+            int mid = left + (right - left) / 2;
+            if (isBadVersion(mid)) {
+                right = mid;//mid might be first bad version
             } else {
-                lo = mid + 1;
+                left = mid + 1;
             }
         }
-        return n == 1 && !isBadVersion(lo)? -1 : lo;//一定要判断n == 1,否则不会进循环
+        return isBadVersion(right)? right : -1;
     }
 }

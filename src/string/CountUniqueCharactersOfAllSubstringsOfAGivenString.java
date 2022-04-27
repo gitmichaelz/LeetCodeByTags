@@ -5,7 +5,8 @@ import java.util.Arrays;
 /**
  * Let's define a function countUniqueChars(s) that returns the number of unique characters on s.
  *
- *     For example if s = "LEETCODE" then "L", "T", "C", "O", "D" are the unique characters since they appear only once in s, therefore countUniqueChars(s) = 5.
+ * For example if s = "LEETCODE" then "L", "T", "C", "O", "D" are the unique characters since they appear only once in s,
+ * therefore countUniqueChars(s) = 5.
  *
  * Given a string s, return the sum of countUniqueChars(t) where t is a substring of s.
  *

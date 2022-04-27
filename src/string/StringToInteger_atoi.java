@@ -18,10 +18,11 @@ package string;
  *     Return the integer as the final result.
  */
 public class StringToInteger_atoi {
-    //1> skip spaces
-    //2> optional: take a plus or minus sign
-    //3> interprets numerical digit as interger value, and the thing needs to be taken care is to check if overflow, if overflow, return Integer.MAX_VALUE/MIN_VALUE
-
+    /**
+     *  1> skip spaces
+     *  2> optional: take a plus or minus sign
+     *  3> interprets numerical digit as integer value, meanwhile, we also need ot check if it is overflow, if overflow, return Integer.MAX_VALUE/MIN_VALUE
+    */
     //Overflow explanation: Integer.MAX_VALUE = 2147483647 and Integer.MIN_VALUE = -2147483648 is the largest/smallest value that an int primitive can contain.
     //
     //Let's simplify this problem. Suppose str1 = " -a649b ", st2 = " a652b ", max = 647, min = -648. So if atoi(str) > 647 || atoi(str) < -648 atoi will overflow.

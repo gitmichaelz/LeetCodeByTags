@@ -27,21 +27,27 @@ import java.util.Arrays;
  *     strs[i] consists of only lower-case English letters.
  */
 public class LongestCommonPrefix {
+    /**
+     * idea: sort a string by default in alphabetical order,
+     * for example, aab, aabc, aabcd, aabd.
+     * we only need to find the first and last string in the array, and find the lcp
+     */
     public String longestCommonPrefix(String[] strs) {
         // Argument checks
         if (strs == null || strs.length == 0) return "";
         if (strs.length == 1) return strs[0];
 
-        StringBuilder sb = new StringBuilder();
-        Arrays.sort(strs);
+        Arrays.sort(strs);//或者直接扫一遍找出最大和最小的 str.compareTo(first) < 0 fist = str; str.compareTo(last) > 0, last = str
         char[] first = strs[0].toCharArray();
         char[] last = strs[strs.length - 1].toCharArray();
-        for (int i = 0, j = 0; i < first.length && j < last.length; i++, j++) {
-            if (first[i] != last[j]) break;
-            sb.append(first[i]);
-        }
-        return sb.toString();
+        int i = 0, len = Math.min(first.length, last.length);
+        while (i < len && first[i] == last[i]) i++;
+        return strs[0].substring(0, i);
     }
+    /**
+     * Time: O(S), where S is the sum of all chars in all strings,
+     * Space: (1)
+     */
     // public String longestCommonPrefix(String[] strs){
     //     if(strs == null || strs.length == 0) return "";
     //     String prefix = strs[0];

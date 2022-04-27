@@ -16,6 +16,13 @@ package palindrome;
  */
 public class LongestPalindromicSubstring {
     //time: N^2, 注意，expand 是O(N)的复杂度
+
+    /**
+     * idea: a palindrome can be expanded from its center, and a center could be 1 or 2 letters, abba,
+     * so for each position i, we expand (i) and (i + 1) to find the longest palindrome.
+     *
+     * time: O(N^2), space: O(1)
+     */
     public String longestPalindrome(String s) {
         if(s == null || s.length() < 2) return s;
         int start = 0, end = 0, n = s.length();//start, end is the start/end index of the max len parlindrome

@@ -25,38 +25,55 @@ import java.util.Arrays;
 public class LongestSubstringWithoutRepeatingCharacters {
     //几个划窗问题一起看，3，76，159， 239， 340， 424， 480， 567， 995， 1004， 1040
     //two points, i is the starting point, j is the ending point, use j to scan the string, if set already contians the cur char, we remove the leading chars in s ending with the first occurrence of ch.
-    //one pass, 用一个整数数组map来记录每个字符以及它上次被访问的位置(index)，并维护当前的left指针(即包含non_repeated的substring的起始位置）如果碰到重复的（map[right] != -1）并且map[cur_c] >= left; update left = map[cur_c] + 1;
+
+    //2 pass
+
+    /**
+     * two pointers: i, j,
+     * j to scan the string, i is at the starting position of the unique substring
+     * we need a int array, to mark the count of each char,
+     * if cur count is 0, that means we dont see the char before, so we can do count[c - 'a']++, and keep j moving forward.
+     * but if cur count is not 0, that means we've see this char before, and we need to move the start point i until
+     * count[c] == 0,
+     * for example "abcdbefc", when we get to second b, we need to move i to c, and meanwhile, count[s.charAt(i)]--;
+     * we also need to maintain the longest length of the unique substring.
+     *
+     */
+
     public int lengthOfLongestSubstring(String s) {
         if(s == null || s.isEmpty()) return 0;
-        int[] map = new int[128];//map[i]: is the last visited position of char i
-        Arrays.fill(map, -1);//defaulting index to -1
+        int[] count = new int[128];
         int maxLen = 0;
-        for(int left = 0, right = 0; right < s.length(); right++) {
-            char c = s.charAt(right);
-            if(map[c] != -1 && map[c] >= left) {//一定要判断map[c] >= left, 例如abacdba,当right指针在第二个a时，left = 2, 可以这样理解:left 以及left右边的字符串是nonrepeating的，如果当前字符c出现在其任意位置，都需要left = map[c] + 1, map[c] 记录这c上一次被访问的位置。
-                //而此时map[a] == 0, 则不比对left进行更新，如果更新反而出错。
-                left = map[c] + 1;
+        for(int i = 0, j = 0; j < s.length(); j++) {
+            char c = s.charAt(j);
+            while(count[c] != 0) {//moving i until cont[c] == 0
+                count[s.charAt(i++)]--;
             }
-            maxLen = Math.max(maxLen, right - left + 1);
-            map[c] = right;
+            count[c]++;
+            maxLen = Math.max(maxLen, j - i + 1);
         }
         return maxLen;
     }
 
 
-    //2 pass
-    // public int lengthOfLongestSubstring(String s) {
-    //     if(s == null || s.isEmpty()) return 0;
-    //     int[] count = new int[128];
-    //     int maxLen = 0;
-    //     for(int i = 0, j = 0; j < s.length(); j++) {
-    //         char c = s.charAt(j);
-    //         while(count[c] != 0) {
-    //             count[s.charAt(i++)]--;
-    //         }
-    //         count[c]++;
-    //         maxLen = Math.max(maxLen, j - i + 1);
-    //     }
-    //     return maxLen;
-    // }
+    //one pass, 用一个整数数组map来记录每个字符以及它上次被访问的位置(index)，并维护当前的left指针(即包含non_repeated的substring的起始位置）如果碰到重复的（map[right] != -1）并且map[cur_c] >= left; update left = map[cur_c] + 1;
+//    public int lengthOfLongestSubstring(String s) {
+//        if(s == null || s.isEmpty()) return 0;
+//        int[] map = new int[128];//map[i]: is the last visited position of char i
+//        Arrays.fill(map, -1);//defaulting index to -1
+//        int maxLen = 0;
+//        for(int left = 0, right = 0; right < s.length(); right++) {
+//            char c = s.charAt(right);
+//            if(map[c] != -1 && map[c] >= left) {//一定要判断map[c] >= left, 例如abacdba,当right指针在第二个a时，left = 2, 可以这样理解:left 以及left右边的字符串是nonrepeating的，如果当前字符c出现在其任意位置，都需要left = map[c] + 1, map[c] 记录这c上一次被访问的位置。
+//                //而此时map[a] == 0, 则不比对left进行更新，如果更新反而出错。
+//                left = map[c] + 1;
+//            }
+//            maxLen = Math.max(maxLen, right - left + 1);
+//            map[c] = right;
+//        }
+//        return maxLen;
+//    }
+
+
+
 }

@@ -52,6 +52,22 @@ package dp;
 public class RegularExpressionMatching {
     //'*' asterisk [ˈæstərɪsk]
     //这个题主要就是考虑当p[j - 1] == '*'时，如何分类。有三种，<1>a*当做一个空串 <2> a*当做一个单独的a <3> a* 当做多个a
+
+    /**
+     * idea: dp[i][j] represents if first i chars in s  can match first j chars in p
+     *
+     *  1. if s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '.'    dp[i][j] = dp[i - 1][j - 1]
+     *  2. else if (p.charAt(j - 1) == *
+     *      1> if (p.charAt(j - 2) != '.' && p.charAt(j - 2) != s.charAt(i - 1))    dp[i][j] = dp[i][j - 2]; j > 2;  a* counts as empty
+     *      2> if(p.charAt(j - 2) == s.charAt(i - 1) || p.charAt(j - 2) == '.')
+     *          2.1> dp[i][j] = dp[i][j - 2], j> 2,  a* counts as empty
+     *          2.2> dp[i - 1][j - 2]  a* as single a
+     *          2.3> dp[i - 1][j] a* as multiple a,即如果是匹配多个a,则看看dp[i - 1][j]能否匹配多个a
+     *
+     *  initialization:         dp[0][0] = true;//empty string matches empty pattern
+     *
+     *  time: O(M * N), space: O(M * N);
+     */
     public boolean isMatch(String s, String p) {
         if (p == null || p.length() == 0) return (s == null || s.length() == 0);
         int len1 = s.length();

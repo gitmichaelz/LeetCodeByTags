@@ -19,7 +19,9 @@ package palindrome;
  * Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
  */
 public class PalindromeNumber {
-    //approach 2. we can construct a number reversely and compare with the original x
+    /**
+     * we can build up a number reversely and compare with the original x
+     */
     public boolean isPalindrome(int x) {
         if(x < 0) return false;
         int newNum = 0;

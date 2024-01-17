@@ -25,15 +25,18 @@ public class FindLeavesOfBinaryTree {
     //
     //I used a helper function to return the height of current node. According to the definition, the height of leaf is 0. h(node) = 1 + max(h(node.left), h(node.right)).
     //The height of a node is also the its index in the result list (res). For example, leaves, whose heights are 0, are stored in res[0]. Once we find the height of a node, we can put it directly into the result.
+
+    //compute each node's max height, then collect nodes with the least height,
+    //same height nodes will be in same list, height value is the index in res list
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         getHeight(root, res);
         return res;
     }
     private int getHeight(TreeNode root, List<List<Integer>> res) {
-        if(root == null) return -1;
+        if(root == null) return -1;//leaf node's height is 0
         int height = 1 + Math.max(getHeight(root.left, res), getHeight(root.right, res));
-        if(res.size() < height + 1) res.add(new ArrayList<>());
+        if(res.size() == height) res.add(new ArrayList<>());//res.size() at least = height + 1
         res.get(height).add(root.val);
         return height;
     }

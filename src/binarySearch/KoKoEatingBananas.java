@@ -18,22 +18,27 @@ package binarySearch;
  */
 public class KoKoEatingBananas {
     public int minEatingSpeed(int[] piles, int H) {
-        int left = 1, right = 0;
-        for(int i = 0; i < piles.length; i++) {
-            right = Math.max(right, piles[i]);
+        int min = 1, max = 0;
+        for (int i = 0; i < piles.length; i++) {
+            max = Math.max(max, piles[i]);
         }
-        while(left <= right) {
-            int mid = left + (right - left) / 2;
-            int count = 0;
-            for(int i = 0; i < piles.length; i++) {
-                //需要的时间，凑整
-                count += (piles[i] + mid - 1) / mid;
+        //二分，最慢一小时吃一根，最快一小时吃最大堆所有根。在这个区间里面去试getHours(),
+        while (min < max) {
+            int mid = min + (max - min) / 2;
+            if (getHours(piles, mid) <= H) {
+                max = mid;
+            } else {
+                min = mid + 1;
             }
-            if(count > H)   //K too small
-                left = mid + 1;
-            else
-                right = mid - 1;
         }
-        return left;
+        return min;
+    }
+
+    private int getHours(int[] piles, int speed) {
+        int hours = 0;
+        for (int bananas : piles) {
+            hours += Math.ceil(1.0 * bananas / speed);
+        }
+        return hours;
     }
 }
